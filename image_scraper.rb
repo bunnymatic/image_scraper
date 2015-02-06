@@ -5,7 +5,7 @@ require 'open-uri'
 require 'uri'
 require 'optparse'
 require 'fileutils'
-require 'pry'
+#require 'pry'
 
 def make_absolute( img_src, root )
   URI.parse(root).merge(URI.parse(img_src)).to_s
@@ -63,7 +63,12 @@ ARGV.compact.each do |url|
     uri = make_absolute(src, url)
     dest = File.join(dir, File.basename(uri))
 
-    File.open(dest, 'wb'){ |f| f.write(open(uri).read()) }
-    puts "Scraped and saved #{dest} from #{url}"
+    begin
+      File.open(dest, 'wb'){ |f| f.write(open(uri).read()) }
+      puts "Scraped and saved #{dest} from #{url}"
+    rescue OpenURI::HTTPError => ex
+      puts "Error fetching #{uri} : #{ex}"
+    end
+      
   end
 end

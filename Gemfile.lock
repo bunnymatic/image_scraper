@@ -9,4 +9,4 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  nokogiri (~> 1.6)
+  nokogiri
