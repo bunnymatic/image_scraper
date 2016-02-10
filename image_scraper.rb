@@ -5,6 +5,7 @@ require 'open-uri'
 require 'uri'
 require 'optparse'
 require 'fileutils'
+require './image_service'
 #require 'pry'
 
 def make_absolute( img_src, root )
@@ -58,8 +59,8 @@ FileUtils.mkdir(dir) unless File.exists?(dir)
 ARGV.compact.each do |url|
   puts "Scraping from url", url
 
-  Nokogiri::HTML(open(url)).css(options[:css]).each do |img|
-    src = img['src']
+  images = ImageService.getImages(url, options)
+  images.each do |src|
     uri = make_absolute(src, url)
     dest = File.join(dir, File.basename(uri))
 
@@ -69,6 +70,6 @@ ARGV.compact.each do |url|
     rescue OpenURI::HTTPError => ex
       puts "Error fetching #{uri} : #{ex}"
     end
-      
+
   end
 end
