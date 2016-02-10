@@ -1,3 +1,5 @@
+require './bing_service'
+
 class ImageService
 
   def self.getImages(url, options)
@@ -9,7 +11,8 @@ class ImageService
 
     private
 
-    def bing(url, options)
+    def bing(_, options)
+      BingService.search(options[:bing])
     end
 
     def generic(url, options)

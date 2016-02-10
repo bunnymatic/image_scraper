@@ -24,6 +24,10 @@ optparse = OptionParser.new do |opts|
     "If you want to trim which images are collected, you can add a css wrapper selector. " +
     "Only images that match '<css wrapper> img' will be pulled.\n\n"
 
+  opts.on("-b term1,term2", "--bing=term1,term2", "search bing for terms") do |bing|
+    options[:bing] = bing
+  end
+
   opts.on("-c CSS_WRAPPER", "--css CSS_WRAPPER", "CSS wrapper selector to limit image selection.  (ex '.img-wrapper' which will find '.img-wrapper img' images") do |css|
     options[:css] = css + " img"
   end
